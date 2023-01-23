@@ -1,0 +1,49 @@
+import {useSSG} from 'nextra/ssg';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://localhost:8080/api/v1/customer/1adf2007-ba51-42ae-b911-4c51e05e1b18`)
+        .then(res => res.json())
+        .then(customer => ({
+            props: {
+                ssg: {
+                    customer: customer
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const WorkingExperience = () => {
+    const {customer} = useSSG()
+    return (
+        <div>
+            {<table>
+                <thead>
+                <tr>
+                    <th>Started work</th>
+                    <th>Finished work</th>
+                    <th>Company</th>
+                    <th>Position at work</th>
+                    <th>Location</th>
+                </tr>
+                </thead>
+                <tbody>
+                {customer.workingExperiences.map(workingExperience =>
+                    <tr key={workingExperience.id}>
+                        <td>{workingExperience.startedWork}</td>
+                        <td>{workingExperience.finishedWork}</td>
+                        <td><i>{workingExperience.company.name}</i></td>
+                        <td>{workingExperience.positionAtWork.name}</td>
+                        <td>{workingExperience.company.location}</td>
+                    </tr>
+                )
+                }
+                </tbody>
+            </table>}
+        </div>
+    )
+}
+
+# Working experience
+
+<WorkingExperience/>

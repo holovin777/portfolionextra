@@ -1,11 +1,42 @@
-# Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+import {useSSG} from 'nextra/ssg';
 
-## What is Nextra?
+export const getStaticProps = ({params}) => {
+    return fetch(`http://localhost:8080/api/v1/customer/1adf2007-ba51-42ae-b911-4c51e05e1b18`)
+        .then(res => res.json())
+        .then(customer => ({
+            props: {
+                ssg: {
+                    customer: customer
+                }
+            },
+            revalidate: 60
+        }))
+}
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+export const ContactIformation = () => {
+    const {customer} = useSSG()
+    return (
+        <div>
+            <div>
+                <h3>{customer.firstName} {customer.lastName}</h3>
+            </div>
+            <div>
+                {customer.phoneNumber}
 
-## Documentation
+            </div>
+            <div>
+                {customer.email}
+            </div>
+            <div>
+                <a href={customer.website}>{customer.website}</a>
+            </div>
+            <div>
+                {customer.residence}
+            </div>
+        </div>
+    )
+}
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+# Contact information
+
+<ContactIformation />
