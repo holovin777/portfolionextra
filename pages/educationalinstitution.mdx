@@ -1,0 +1,59 @@
+import {useSSG} from 'nextra/ssg';
+import {Tab, Tabs} from 'nextra-theme-docs';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://localhost:8080/api/v1/customer/e28e100f-b2dd-49c7-b44a-81fb39cc249e/qualification/all`)
+        .then(res => res.json())
+        .then(qualifications => ({
+            props: {
+                ssg: {
+                    qualifications: qualifications
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const EducationalInstitution = () => {
+    const {qualifications} = useSSG();
+    const tabItems = [];
+    qualifications.map(qualification =>
+    {tabItems.push(qualification.startedStudying)});
+    return (
+        <div>
+            <hr></hr>
+            Started study:
+            <Tabs items={tabItems}>
+                {qualifications.map(qualification =>
+                    <Tab key={qualification.id}>
+                        <div><h2>🏫 {qualification.educationalInstitution.studyPlace}</h2></div>
+                        <div><h3>{qualification.educationalInstitution.name}</h3></div>
+                        {qualification.academicDegree !== null &&
+                            <div><h4>Academic degree: {qualification.academicDegree}</h4></div>
+                        }
+                        {qualification.faculty !== null &&
+                            <div><h4>Faculty: {qualification.faculty}</h4></div>
+                        }
+                        {qualification.department !== null &&
+                            <div><h4>Department: {qualification.department}</h4></div>
+                        }
+                        {qualification.speciality !== null &&
+                            <div><h4>Speciality: {qualification.speciality}</h4></div>
+                        }
+                        <hr></hr>
+                        <div>🗺 {qualification.educationalInstitution.location}</div>
+                        <hr></hr>
+                        {qualification.finishedStudying !== null &&
+                            <div>Finished studying in {qualification.finishedStudying}</div>
+                        }
+                    </Tab>
+                )
+                }
+            </Tabs>
+        </div>
+    )
+}
+
+# Educational institution
+
+<EducationalInstitution/>

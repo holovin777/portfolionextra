@@ -2,12 +2,12 @@ import {useSSG} from 'nextra/ssg';
 import {Tab, Tabs} from 'nextra-theme-docs';
 
 export const getStaticProps = ({params}) => {
-    return fetch(`http://localhost:8080/api/v1/customer/1adf2007-ba51-42ae-b911-4c51e05e1b18`)
+    return fetch(`http://localhost:8080/api/v1/customer/e28e100f-b2dd-49c7-b44a-81fb39cc249e/working-experience/all`)
         .then(res => res.json())
-        .then(customer => ({
+        .then(workingExperiences => ({
             props: {
                 ssg: {
-                    customer: customer
+                    workingExperiences: workingExperiences
                 }
             },
             revalidate: 60
@@ -15,16 +15,18 @@ export const getStaticProps = ({params}) => {
 }
 
 export const WorkingExperience = () => {
-    const {customer} = useSSG();
+    const {workingExperiences} = useSSG();
     const tabItems = [];
-    customer.workingExperiences.map(workingExperience =>
+    workingExperiences.map(workingExperience =>
     {tabItems.push(workingExperience.startedWork)});
     return (
         <div>
+            <hr></hr>
+            Started work:
             <Tabs items={tabItems}>
-                {customer.workingExperiences.map(workingExperience =>
+                {workingExperiences.map(workingExperience =>
                     <Tab key={workingExperience.id}>
-                        <div><h2>🏭 <i>{workingExperience.company.name}</i></h2></div>
+                        <div><h2>🏭 {workingExperience.company.name}</h2></div>
                         <div><h3>👷🏻 {workingExperience.positionAtWork.name}</h3></div>
                         <hr></hr>
                         <div>🗺 {workingExperience.company.location}</div>
