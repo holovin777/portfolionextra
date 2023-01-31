@@ -1,7 +1,7 @@
 {
   "name": "nextra-docs-template",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "Portfolio",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/holovin777/portfolionextra.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Viktor Holovin <holovin@mail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/holovin777/portfolionextra/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/holovin777/portfolionextra#readme",
   "dependencies": {
     "next": "^13.0.6",
     "nextra": "2.0.1",
