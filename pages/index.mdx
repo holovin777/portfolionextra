@@ -27,9 +27,11 @@ export const ContactIformation = () => {
             <div>
                 {customer.email}
             </div>
-            <div>
-                <a href={customer.website}>{customer.website}</a>
-            </div>
+            {customer.website !== null &&
+                <div>
+                    <a href={customer.website}>{customer.website}</a>
+                </div>
+            }
             <div>
                 {customer.residence}
             </div>
