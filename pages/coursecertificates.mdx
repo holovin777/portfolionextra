@@ -22,9 +22,6 @@ export const CourseCertificates = () => {
         if (qualification.educationalInstitution.studyPlace === "COURSE") {
             qualificationsToShow.push(qualification)
             tabItems.push(qualification.finishedStudying)
-            if (qualification.course.name !== null) {
-                console.log(qualification.course.name)
-            }
         }
     });
     return (
@@ -32,29 +29,12 @@ export const CourseCertificates = () => {
             <Tabs items={tabItems}>
                 {qualificationsToShow.map(qualification =>
                     <Tab key={qualification.id}>
+                        {qualification.course.name !== null &&
+                            <div><h2>{qualification.course.name}</h2></div>
+                        }
                         {qualification.educationalInstitution.studyPlace !== null &&
                             <div><h2>🏫 {qualification.educationalInstitution.studyPlace}</h2></div> &&
                             <div><h3>{qualification.educationalInstitution.name}</h3></div>
-                        }
-                        {qualification.faculty !== null &&
-                            <div><h4>Faculty: {qualification.faculty}</h4></div>
-                        }
-                        {qualification.department !== null &&
-                            <div><h4>Department: {qualification.department}</h4></div>
-                        }
-                        {qualification.speciality !== null &&
-                            <div><h4>Speciality: {qualification.speciality}</h4></div>
-                        }
-                        {qualification.educationalInstitution.location !== null &&
-                            <hr></hr> &&
-                            <div>🗺 {qualification.educationalInstitution.location}</div> &&
-                            <hr></hr>
-                        }
-                        {qualification.startedStudying !== null &&
-                            <div>Started studying in {qualification.startedStudying}</div>
-                        }
-                        {qualification.course.name !== null &&
-                            <div>{qualification.course.name}</div>
                         }
                     </Tab>
                 )
