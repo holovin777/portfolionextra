@@ -5,7 +5,7 @@ This is frontend for PortfolioSpring backend
 ## Quick Start
 
 ```bash
-git clone git@github.com:holovin777/portfolionextra.git
+git clone https://github.com/holovin777/portfolionextra.git
 cd portfolionextra
 yarn dev --hostname 192.168.x.x --port 3000
 ```
