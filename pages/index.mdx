@@ -1,7 +1,7 @@
 import {useSSG} from 'nextra/ssg';
 
 export const getStaticProps = ({params}) => {
-    return fetch(`http://localhost:8080/api/v1/customer/d2cf7fc0-fc7e-4c59-a111-77ccd4f008fa`)
+    return fetch(`http://localhost:8080/api/v1/customer/4d936c7c-05ea-45f2-a91f-08518491c986`)
         .then(res => res.json())
         .then(customer => ({
             props: {
@@ -38,6 +38,6 @@ export const ContactInformation = () => {
     )
 }
 
-# Contact information
+# Contact informations
 
 <ContactInformation />

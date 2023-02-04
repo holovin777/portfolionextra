@@ -2,7 +2,7 @@ import {useSSG} from 'nextra/ssg';
 import {Tab, Tabs} from 'nextra-theme-docs';
 
 export const getStaticProps = ({params}) => {
-    return fetch(`http://localhost:8080/api/v1/customer/d2cf7fc0-fc7e-4c59-a111-77ccd4f008fa/qualification/all`)
+    return fetch(`http://localhost:8080/api/v1/customer/4d936c7c-05ea-45f2-a91f-08518491c986/qualification/all`)
         .then(res => res.json())
         .then(qualifications => ({
             props: {
@@ -33,8 +33,7 @@ export const CourseCertificates = () => {
                             <div><h2>{qualification.course.name}</h2></div>
                         }
                         {qualification.educationalInstitution.studyPlace !== null &&
-                            <div><h2>🏫 {qualification.educationalInstitution.studyPlace}</h2></div> &&
-                            <div><h3>{qualification.educationalInstitution.name}</h3></div>
+                            <div><h4>{qualification.educationalInstitution.name}</h4></div>
                         }
                     </Tab>
                 )

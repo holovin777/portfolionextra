@@ -2,7 +2,7 @@ import {useSSG} from 'nextra/ssg';
 import {Tab, Tabs} from 'nextra-theme-docs';
 
 export const getStaticProps = ({params}) => {
-    return fetch(`http://localhost:8080/api/v1/customer/d2cf7fc0-fc7e-4c59-a111-77ccd4f008fa/qualification/all`)
+    return fetch(`http://localhost:8080/api/v1/customer/4d936c7c-05ea-45f2-a91f-08518491c986/qualification/all`)
         .then(res => res.json())
         .then(qualifications => ({
             props: {
@@ -21,7 +21,7 @@ export const AcademicDegrees = () => {
     qualifications.map(qualification => {
         if (qualification.academicDegree !== null) {
             qualificationsToShow.push(qualification)
-            tabItems.push(qualification.academicDegree)
+            tabItems.push(qualification.startedStudying)
         }
     });
     return (
@@ -29,8 +29,13 @@ export const AcademicDegrees = () => {
             <Tabs items={tabItems}>
                 {qualificationsToShow.map(qualification =>
                     <Tab key={qualification.id}>
+                        {qualification.academyDegree !== null &&
+                            <div><h2>{qualification.academicDegree}</h2></div>
+                        }
+                        {qualification.speciality !== null &&
+                            <div><h2>{qualification.speciality}</h2></div>
+                        }
                         {qualification.educationalInstitution.studyPlace !== null &&
-                            <div><h2>🏫 {qualification.educationalInstitution.studyPlace}</h2></div> &&
                             <div><h3>{qualification.educationalInstitution.name}</h3></div>
                         }
                         {qualification.faculty !== null &&
@@ -39,16 +44,10 @@ export const AcademicDegrees = () => {
                         {qualification.department !== null &&
                             <div><h4>Department: {qualification.department}</h4></div>
                         }
-                        {qualification.speciality !== null &&
-                            <div><h4>Speciality: {qualification.speciality}</h4></div>
-                        }
                         {qualification.educationalInstitution.location !== null &&
                             <hr></hr> &&
                             <div>🗺 {qualification.educationalInstitution.location}</div> &&
                             <hr></hr>
-                        }
-                        {qualification.startedStudying !== null &&
-                            <div>Started studying in {qualification.startedStudying}</div>
                         }
                         {qualification.finishedStudying !== null &&
                             <div>Finished studying in {qualification.finishedStudying}</div>
