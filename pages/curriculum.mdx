@@ -1,26 +1,85 @@
 import {useSSG} from 'nextra/ssg';
 import {loadCustomer} from '../lib/customer-load'
+import {loadCustomerWorkingExperiences} from "../lib/customer-working-experiences-load";
 
 export async function getStaticProps() {
     const customer = await loadCustomer("4d936c7c-05ea-45f2-a91f-08518491c986")
+    const workingExperiences = await loadCustomerWorkingExperiences("4d936c7c-05ea-45f2-a91f-08518491c986")
 
     return {
         props: {
             ssg: {
-                customer: customer
+                customer: customer,
+                workingExperiences: workingExperiences
             }
         },
         revalidate: 60
     }
 }
 
-export const Curriculum = () => {
+export const ContactInformation = () => {
     const {customer} = useSSG();
     return (
-        <div>{customer.firstName}</div>
+        <div>
+            <h2>Contact information</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Contact information</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>{customer.firstName} {customer.lastName}</td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td>{customer.phoneNumber}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{customer.email}</td>
+                </tr>
+                <tr>
+                    <td>Residemce</td>
+                    <td>{customer.residence}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+export const CustomerWorkingExperience = () => {
+    const {workingExperiences} = useSSG();
+    return (
+        <div>
+            <h2>Working experience</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Started work</th>
+                    <th>Position at work</th>
+                    <th>Company</th>
+                </tr>
+                </thead>
+                <tbody>
+                {workingExperiences.map(item => (
+                    <tr key={item.id}>
+                        <td>{item.startedWork}</td>
+                        <td>{item.positionAtWork.name}</td>
+                        <td>{item.company.name}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
     )
 }
 
 # Curriculum vitae
 
-<Curriculum />
+<ContactInformation/>
+<CustomerWorkingExperience/>
