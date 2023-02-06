@@ -1,1 +1,26 @@
-# Curriculum
+import {useSSG} from 'nextra/ssg';
+import {loadCustomer} from '../lib/customer-load'
+
+export async function getStaticProps() {
+    const customer = await loadCustomer("4d936c7c-05ea-45f2-a91f-08518491c986")
+
+    return {
+        props: {
+            ssg: {
+                customer: customer
+            }
+        },
+        revalidate: 60
+    }
+}
+
+export const Curriculum = () => {
+    const {customer} = useSSG();
+    return (
+        <div>{customer.firstName}</div>
+    )
+}
+
+# Curriculum vitae
+
+<Curriculum />
