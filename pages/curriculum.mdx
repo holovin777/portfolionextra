@@ -1,27 +1,30 @@
 import {useSSG} from 'nextra/ssg';
 import {loadCustomer} from '../lib/customer-load'
 import {loadCustomerWorkingExperiences} from "../lib/customer-working-experiences-load";
+import {loadCustomerQualifications} from "../lib/customer-qualifications-load";
 
 export async function getStaticProps() {
     const customer = await loadCustomer("4d936c7c-05ea-45f2-a91f-08518491c986")
     const workingExperiences = await loadCustomerWorkingExperiences("4d936c7c-05ea-45f2-a91f-08518491c986")
+    const qualifications = await loadCustomerQualifications("4d936c7c-05ea-45f2-a91f-08518491c986")
 
     return {
         props: {
             ssg: {
                 customer: customer,
-                workingExperiences: workingExperiences
+                workingExperiences: workingExperiences,
+                qualifications: qualifications
             }
         },
         revalidate: 60
     }
 }
 
-export const ContactInformation = () => {
+export const CustomerContactInformationTable = () => {
     const {customer} = useSSG();
     return (
         <div>
-            <h2>Contact information</h2>
+            <h2>Contact information's</h2>
             <table>
                 <thead>
                 <tr>
@@ -52,25 +55,27 @@ export const ContactInformation = () => {
     )
 }
 
-export const CustomerWorkingExperience = () => {
+export const CustomerWorkingExperienceTable = () => {
     const {workingExperiences} = useSSG();
     return (
         <div>
-            <h2>Working experience</h2>
+            <h2>Working experiences</h2>
             <table>
                 <thead>
                 <tr>
                     <th>Started work</th>
                     <th>Position at work</th>
                     <th>Company</th>
+                    <th>Finished work</th>
                 </tr>
                 </thead>
                 <tbody>
-                {workingExperiences.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.startedWork}</td>
-                        <td>{item.positionAtWork.name}</td>
-                        <td>{item.company.name}</td>
+                {workingExperiences.map(workingExperience => (
+                    <tr key={workingExperience.id}>
+                        <td>{workingExperience.startedWork}</td>
+                        <td>{workingExperience.positionAtWork.name}</td>
+                        <td>{workingExperience.company.name}</td>
+                        <td>{workingExperience.finishedWork}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -79,7 +84,84 @@ export const CustomerWorkingExperience = () => {
     )
 }
 
+export const CustomerAcademicDegreeTable = () => {
+    const {qualifications} = useSSG();
+    const qualificationsToShow = []
+    qualifications.map(qualification => {
+        if (qualification.academicDegree !== null) {
+            qualificationsToShow.push(qualification)
+        }
+    });
+    return (
+        <div>
+            <h2>Academic degrees</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Started studying</th>
+                    <th>Academic degree</th>
+                    <th>Speciality</th>
+                    <th>Faculty</th>
+                    <th>Finished studying</th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    qualificationsToShow.map(qualification => (
+                        <tr key={qualification.id}>
+                            <td>{qualification.startedStudying}</td>
+                            <td>{qualification.academicDegree}</td>
+                            <td>{qualification.speciality}</td>
+                            <td>{qualification.faculty}</td>
+                            <td>{qualification.finishedStudying}</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+
+export const CustomerCourseCertificateTable = () => {
+    const {qualifications} = useSSG();
+    const qualificationsToShow = []
+    qualifications.map(qualification => {
+        if (qualification.educationalInstitution.studyPlace === "COURSE") {
+            qualificationsToShow.push(qualification)
+        }
+    });
+    return (
+        <div>
+            <h2>Course certificates</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Course name</th>
+                    <th>Course brand</th>
+                    <th>Finished studying</th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    qualificationsToShow.map(qualification => (
+                        <tr key={qualification.id}>
+                            <td>{qualification.course.name}</td>
+                            <td>{qualification.educationalInstitution.name}</td>
+                            <td>{qualification.finishedStudying}</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
 # Curriculum vitae
 
-<ContactInformation/>
-<CustomerWorkingExperience/>
+<CustomerContactInformationTable/>
+<CustomerWorkingExperienceTable/>
+<CustomerAcademicDegreeTable/>
+<CustomerCourseCertificateTable/>
