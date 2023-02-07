@@ -45,6 +45,12 @@ export const CustomerContactInformationTable = () => {
                     <td>Email</td>
                     <td>{customer.email}</td>
                 </tr>
+                {customer.website !== null &&
+                    <tr>
+                        <td>Website</td>
+                        <td><a href={customer.website}>{customer.website}</a></td>
+                    </tr>
+                }
                 <tr>
                     <td>Residence</td>
                     <td>{customer.residence}</td>
@@ -165,3 +171,5 @@ export const CustomerCourseCertificateTable = () => {
 <CustomerWorkingExperienceTable/>
 <CustomerAcademicDegreeTable/>
 <CustomerCourseCertificateTable/>
+
+Autorizzo il trattamento dei dati personali contenuti nel mio curriculum vitae in base all’art. 13 del D. Lgs. 196/2003 e all’art. 13 del Regolamento UE 2016/679 relativo alla protezione delle persone fisiche con riguardo al trattamento dei dati personali.
