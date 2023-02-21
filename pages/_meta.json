@@ -3,6 +3,9 @@
   "workingexperiences": "Working experiences",
   "academicdegrees": "Academic degrees",
   "coursecertificates": "Course certificates",
-  "curriculum": "Curriculum",
-  "contactinformations": "Contact information's"
+  "contactinformations": "Contact information's",
+  "curriculum": {
+    "title": "Curriculum",
+    "display": "hidden"
+  }
 }
