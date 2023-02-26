@@ -4,9 +4,9 @@ import {loadCustomerWorkingExperiences} from "../lib/customer-working-experience
 import {loadCustomerQualifications} from "../lib/customer-qualifications-load";
 
 export async function getStaticProps() {
-    const customer = await loadCustomer("4d936c7c-05ea-45f2-a91f-08518491c986")
-    const workingExperiences = await loadCustomerWorkingExperiences("4d936c7c-05ea-45f2-a91f-08518491c986")
-    const qualifications = await loadCustomerQualifications("4d936c7c-05ea-45f2-a91f-08518491c986")
+    const customer = await loadCustomer(process.env.CUSTOMER_ID)
+    const workingExperiences = await loadCustomerWorkingExperiences(process.env.CUSTOMER_ID)
+    const qualifications = await loadCustomerQualifications(process.env.CUSTOMER_ID)
 
     return {
         props: {
