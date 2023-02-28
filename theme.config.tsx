@@ -12,7 +12,7 @@ const config: DocsThemeConfig = {
   },
   i18n: [
     { locale: 'en', text: 'English' },
-    { locale: 'it', text: 'Italy' }
+    { locale: 'it', text: 'Italiano' }
   ]
 }
 
