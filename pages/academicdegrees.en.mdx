@@ -1,0 +1,71 @@
+import {useSSG} from 'nextra/ssg';
+import {Tab, Tabs} from 'nextra-theme-docs';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://${process.env.IP_ADDR_API}/api/v1/customer/${process.env.CUSTOMER_ID}/qualification/all`)
+        .then(res => res.json())
+        .then(qualifications => ({
+            props: {
+                ssg: {
+                    qualifications: qualifications
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const AcademicDegrees = () => {
+    const {qualifications} = useSSG();
+    const tabItems = [];
+    const qualificationsToShow = []
+    qualifications.map(qualification => {
+        if (qualification.academicDegree !== null) {
+            qualificationsToShow.push(qualification)
+            tabItems.push(qualification.startedStudying)
+        }
+    });
+    return (
+        <div>
+            <Tabs items={tabItems}>
+                {qualificationsToShow.map(qualification =>
+                    <Tab key={qualification.id}>
+                        {qualification.academicDegree === "MASTER" &&
+                            <div><h2>MASTER</h2></div>
+                        }
+                        {qualification.academicDegree === "BACHELOR" &&
+                            <div><h2>BACHELOR</h2></div>
+                        }
+                        {qualification.academicDegree === "JUNIOR_SPECIALIST" &&
+                            <div><h2>JUNIOR SPECIALIST</h2></div>
+                        }
+                        {qualification.speciality !== null &&
+                            <div><h2>{qualification.speciality}</h2></div>
+                        }
+                        {qualification.educationalInstitution.studyPlace !== null &&
+                            <div><h3>{qualification.educationalInstitution.name}</h3></div>
+                        }
+                        {qualification.faculty !== null &&
+                            <div><h4>Faculty: {qualification.faculty}</h4></div>
+                        }
+                        {qualification.department !== null &&
+                            <div><h4>Department: {qualification.department}</h4></div>
+                        }
+                        {qualification.educationalInstitution.location !== null &&
+                            <hr></hr> &&
+                            <div>🗺 {qualification.educationalInstitution.location}</div> &&
+                            <hr></hr>
+                        }
+                        {qualification.finishedStudying !== null &&
+                            <div>Finished studying in {qualification.finishedStudying}</div>
+                        }
+                    </Tab>
+                )
+                }
+            </Tabs>
+        </div>
+    )
+}
+
+# Academic degrees
+
+<AcademicDegrees/>

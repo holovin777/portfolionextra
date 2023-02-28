@@ -1,0 +1,43 @@
+import {useSSG} from 'nextra/ssg';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://${process.env.IP_ADDR_API}/api/v1/customer/${process.env.CUSTOMER_ID}`)
+        .then(res => res.json())
+        .then(customer => ({
+            props: {
+                ssg: {
+                    customer: customer
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const ContactInformations = () => {
+    const {customer} = useSSG()
+    return (
+        <div>
+            <div>
+                <h3>{customer.firstName} {customer.lastName}</h3>
+            </div>
+            <div>
+                {customer.phoneNumber}
+            </div>
+            <div>
+                {customer.email}
+            </div>
+            {customer.website !== null &&
+                <div>
+                    <a href={customer.website}>{customer.website}</a>
+                </div>
+            }
+            <div>
+                {customer.residence}
+            </div>
+        </div>
+    )
+}
+
+# Informazioni di contatto
+
+<ContactInformations />

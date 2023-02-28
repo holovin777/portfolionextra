@@ -29,20 +29,26 @@ export const AcademicDegrees = () => {
             <Tabs items={tabItems}>
                 {qualificationsToShow.map(qualification =>
                     <Tab key={qualification.id}>
-                        {qualification.academyDegree !== null &&
-                            <div><h2>{qualification.academicDegree}</h2></div>
+                        {qualification.academicDegree === "MASTER" &&
+                            <div><h2>MASTER</h2></div>
                         }
-                        {qualification.speciality !== null &&
-                            <div><h2>{qualification.speciality}</h2></div>
+                        {qualification.academicDegree === "BACHELOR" &&
+                            <div><h2>LAUREA BREVE</h2></div>
+                        }
+                        {qualification.academicDegree === "JUNIOR_SPECIALIST" &&
+                            <div><h2>SPECIALISTA JUNIOR</h2></div>
+                        }
+                        {qualification.specialityItaly !== null &&
+                            <div><h2>{qualification.specialityItaly}</h2></div>
                         }
                         {qualification.educationalInstitution.studyPlace !== null &&
-                            <div><h3>{qualification.educationalInstitution.name}</h3></div>
+                            <div><h3>{qualification.educationalInstitution.nameItaly}</h3></div>
                         }
-                        {qualification.faculty !== null &&
-                            <div><h4>Faculty: {qualification.faculty}</h4></div>
+                        {qualification.facultyItaly !== null &&
+                            <div><h4>Facoltà: {qualification.facultyItaly}</h4></div>
                         }
-                        {qualification.department !== null &&
-                            <div><h4>Department: {qualification.department}</h4></div>
+                        {qualification.departmentItaly !== null &&
+                            <div><h4>Departmento: {qualification.departmentItaly}</h4></div>
                         }
                         {qualification.educationalInstitution.location !== null &&
                             <hr></hr> &&
@@ -50,7 +56,7 @@ export const AcademicDegrees = () => {
                             <hr></hr>
                         }
                         {qualification.finishedStudying !== null &&
-                            <div>Finished studying in {qualification.finishedStudying}</div>
+                            <div>Finito di studiare nel {qualification.finishedStudying}</div>
                         }
                     </Tab>
                 )
@@ -60,6 +66,6 @@ export const AcademicDegrees = () => {
     )
 }
 
-# Academic degrees
+# Gradi accademici
 
 <AcademicDegrees/>

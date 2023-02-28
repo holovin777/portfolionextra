@@ -10,6 +10,10 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Viktor Holovin',
   },
+  i18n: [
+    { locale: 'en', text: 'English' },
+    { locale: 'it', text: 'Italy' }
+  ]
 }
 
 export default config

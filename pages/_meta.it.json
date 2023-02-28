@@ -1,0 +1,11 @@
+{
+  "index": "Home",
+  "workingexperiences": "Esperienze lavorative",
+  "academicdegrees": "Gradi accademici",
+  "coursecertificates": "Certificati di corso",
+  "contactinformations": "Informazioni di contatto",
+  "curriculum": {
+    "title": "Curriculum",
+    "display": "hidden"
+  }
+}

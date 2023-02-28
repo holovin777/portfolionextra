@@ -1,0 +1,45 @@
+import {useSSG} from 'nextra/ssg';
+import {Tab, Tabs} from 'nextra-theme-docs';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://${process.env.IP_ADDR_API}/api/v1/customer/${process.env.CUSTOMER_ID}/working-experience/all`)
+        .then(res => res.json())
+        .then(workingExperiences => ({
+            props: {
+                ssg: {
+                    workingExperiences: workingExperiences
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const WorkingExperiences = () => {
+    const {workingExperiences} = useSSG();
+    const tabItems = [];
+    workingExperiences.map(workingExperience =>
+    {tabItems.push(workingExperience.startedWork)});
+    return (
+        <div>
+            <Tabs items={tabItems}>
+                {workingExperiences.map(workingExperience =>
+                    <Tab key={workingExperience.id}>
+                        <div><h2>{workingExperience.positionAtWork.nameItaly}</h2></div>
+                        <div><h4>"{workingExperience.company.name}"</h4></div>
+                        <hr></hr>
+                        <div>🗺 {workingExperience.company.location}</div>
+                        <hr></hr>
+                        {workingExperience.finishedWork !== null &&
+                            <div>Finished worked in {workingExperience.finishedWork}</div>
+                        }
+                    </Tab>
+                )
+                }
+            </Tabs>
+        </div>
+    )
+}
+
+# Esperienze lavorative
+
+<WorkingExperiences/>

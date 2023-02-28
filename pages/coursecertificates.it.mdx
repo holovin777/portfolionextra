@@ -1,0 +1,48 @@
+import {useSSG} from 'nextra/ssg';
+import {Tab, Tabs} from 'nextra-theme-docs';
+
+export const getStaticProps = ({params}) => {
+    return fetch(`http://${process.env.IP_ADDR_API}/api/v1/customer/${process.env.CUSTOMER_ID}/qualification/all`)
+        .then(res => res.json())
+        .then(qualifications => ({
+            props: {
+                ssg: {
+                    qualifications: qualifications
+                }
+            },
+            revalidate: 60
+        }))
+}
+
+export const CourseCertificates = () => {
+    const {qualifications} = useSSG();
+    const tabItems = [];
+    const qualificationsToShow = []
+    qualifications.map(qualification => {
+        if (qualification.educationalInstitution.studyPlace === "COURSE") {
+            qualificationsToShow.push(qualification)
+            tabItems.push(qualification.finishedStudying)
+        }
+    });
+    return (
+        <div>
+            <Tabs items={tabItems}>
+                {qualificationsToShow.map(qualification =>
+                    <Tab key={qualification.id}>
+                        {qualification.course.name !== null &&
+                            <div><h2>{qualification.course.name}</h2></div>
+                        }
+                        {qualification.educationalInstitution.studyPlace !== null &&
+                            <div><h4>{qualification.educationalInstitution.name}</h4></div>
+                        }
+                    </Tab>
+                )
+                }
+            </Tabs>
+        </div>
+    )
+}
+
+# Certificati di corso
+
+<CourseCertificates />
