@@ -51,6 +51,12 @@ export const CustomerContactInformationTable = () => {
                         <td><a href={customer.website}>{customer.website}</a></td>
                     </tr>
                 }
+                {customer.birthday !== null &&
+                    <tr>
+                        <td>Birthday</td>
+                        <td>{customer.birthday}</td>
+                    </tr>
+                }
                 <tr>
                     <td>Residence</td>
                     <td>{customer.residence}</td>
